@@ -8,38 +8,58 @@ import { Badge } from "@/components/ui/badge"
 
 export default function CarbonBNUVisualizer() {
   // Scope 2 Data
-  const scope2Data = [
-    { block: "SLASS Block", gridEmissions: 12642.14, solarOffset: 38302.82, netEmissions: -25660.68 },
-    { block: "SVAD + BBA", gridEmissions: 23267.72, solarOffset: 70495.92, netEmissions: -47228.2 },
-    { block: "Hostels", gridEmissions: 11100.8, solarOffset: 33632.9, netEmissions: -22532.1 },
-    { block: "Center Block", gridEmissions: 11032.63, solarOffset: 33426.36, netEmissions: -22393.73 },
-    { block: "SLASS Block 2", gridEmissions: 21076.71, solarOffset: 63857.66, netEmissions: -42780.95 },
+  const scope2Data =  [
+    { month: "Jan 2025", gridunitsConsumed: 80000, gridEmission: 49200 , solarProduction: 58632, savedEmissions: 36058.68 , netEmissions: 13141.32 },
+    { month: "Feb 2025", gridunitsConsumed: 20000, gridEmission: 12300 , solarProduction: 46428, savedEmissions: 28553.22 , netEmissions: -16253.22 },
+    { month: "Mar 2025", gridunitsConsumed: 4000,  gridEmission: 2460,   solarProduction: 52000, savedEmissions: 31980    , netEmissions: -29340 },
+    { month: "Apr 2025", gridunitsConsumed: 76000, gridEmission: 46740,  solarProduction: 111099,savedEmissions: 68325.885, netEmissions: -21585.885 },
+    { month: "May 2025", gridunitsConsumed: 116000, gridEmission: 71340, solarProduction: 103934,savedEmissions: 63919.41 , netEmissions: 7420.59 },
+    { month: "Jun 2025", gridunitsConsumed: 148000, gridEmission: 91020, solarProduction: 91186, savedEmissions: 56079.39 , netEmissions: 34940.61 },
   ]
-
   // Scope 1 Data
   const scope1Data = [
-    { month: "Jan 2025", emissions: 11095.2 },
-    { month: "Feb 2025", emissions: 18163.84 },
-    { month: "Mar 2025", emissions: 10591.68 },
-    { month: "Apr 2025", emissions: 8953.56 },
-    { month: "May 2025", emissions: 9837.25 },
-    { month: "Jun 2025", emissions: 10552.48 },
+    { month: "Jan 2025", dieselConsumption: 23267.72, emissionsinKg: 11095.2 },
+    { month: "Feb 2025", dieselConsumption: 11032.63, emissionsinKg: 18191.84 },
+    { month: "Mar 2025", dieselConsumption: 11100.8,  emissionsinKg: 10588.68 },
+    { month: "Apr 2025", dieselConsumption: 21076.71, emissionsinKg: 8956.56 },
+    { month: "May 2025", dieselConsumption: 12642.14, emissionsinKg: 7589.76 },
+    { month: "Jun 2025", dieselConsumption: 12642.14, emissionsinKg: 11647.28 }, 
   ]
 
   // Scope 3 Data
   const scope3Data = [
-    { block: "SVAD", electricityUse: 862097.12, emissions: 370701.76 },
-    { block: "RHSA", electricityUse: 99993.12, emissions: 42997.04 },
-    { block: "SLASS", electricityUse: 500, emissions: 215 },
-    { block: "SCIT", electricityUse: 339170.0, emissions: 145843.1 },
-    { block: "BBA", electricityUse: 152305.0, emissions: 65491.15 },
-    { block: "Boys Hostel", electricityUse: 107450.0, emissions: 46203.5 },
-  ]
+  {
+    month: "May 2025",
+    bottles: 80.1,
+    glass: 50.6,
+    foodWaste: 2067.3,
+    plastic: 13.2,
+    cartons: 106,
+    emissionsBottles: 200.25,
+    emissionsGlass: 72.7122,
+    emissionsFoodWaste: 2697.82,
+    emissionsPlastic: 38.016,
+    emissionsCartons: 99.64,
+  },
+  {
+    month: "Jun 2025",
+    bottles: 119.8,
+    glass: 177.85,
+    foodWaste: 1223,
+    plastic: 69,
+    cartons: 276.6,
+    emissionsBottles: 299.5,
+    emissionsGlass: 255.57,
+    emissionsFoodWaste: 1596.015,
+    emissionsPlastic: 198.72,
+    emissionsCartons: 260.004,
+  }
+];
 
   // Calculate totals
-  const totalScope2NetEmissions = scope2Data.reduce((sum, item) => sum + item.netEmissions, 0)
-  const totalScope1Emissions = scope1Data.reduce((sum, item) => sum + item.emissions, 0)
-  const totalScope3Emissions = 671451.55
+  const totalScope2NetEmissions = scope2Data.reduce((sum, item) => sum + item.gridEmission, 0)
+  const totalScope1Emissions = scope1Data.reduce((sum, item) => sum + item.emissionsinKg, 0)
+  const totalScope3Emissions = 5718.25
 
   return (
     <div className="min-h-screen bg-white text-black">
@@ -119,66 +139,19 @@ export default function CarbonBNUVisualizer() {
             <Card className="border-2 border-black">
               <CardHeader className="bg-black text-white">
                 <CardTitle className="text-3xl font-extrabold">3</CardTitle>
-                <CardDescription className="text-gray-200">Other indirect emissions</CardDescription>
+                <CardDescription className="text-gray-200">Emission from Waste</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold text-orange-600">
                   {totalScope3Emissions.toLocaleString()} kg CO₂e
                 </div>
-                <p className="text-sm text-gray-600 mt-2">Annual electricity use</p>
+                <p className="text-sm text-gray-600 mt-2">Two months waste Emission.</p>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* Scope 2 Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-8">Scope 2: Electricity Emissions</h2>
-          <p className="text-lg text-gray-600 mb-8">
-            Grid emissions vs solar offset showing net carbon impact by building block
-          </p>
-
-          <Card className="border-2 border-black w-full">
-            <CardHeader>
-              <CardTitle>Grid Emissions vs Solar Offset</CardTitle>
-              <CardDescription>Positive values show emissions, negative values show carbon offset</CardDescription>
-            </CardHeader>
-            <CardContent className="w-full">
-              <ChartContainer
-                config={{
-                  gridEmissions: {
-                    label: "Grid Emissions",
-                    color: "#000000",
-                  },
-                  solarOffset: {
-                    label: "Solar Offset",
-                    color: "#666666",
-                  },
-                  netEmissions: {
-                    label: "Net Emissions",
-                    color: "#333333",
-                  },
-                }}
-                className="h-[400px] w-full"
-              >
-                <BarChart data={scope2Data} margin={{ top: 20, right: 30, left: 20, bottom: 60 }} width="100%">
-                  <XAxis dataKey="block" angle={-45} textAnchor="end" height={80} interval={0} />
-                  <YAxis />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Legend />
-                  <Bar dataKey="gridEmissions" fill="var(--color-gridEmissions)" name="Grid Emissions" />
-                  <Bar dataKey="solarOffset" fill="var(--color-solarOffset)" name="Solar Offset" />
-                  <Bar dataKey="netEmissions" fill="var(--color-netEmissions)" name="Net Emissions" />
-                </BarChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      <Separator className="my-8" />
 
       {/* Scope 1 Section */}
       <section className="py-16 bg-gray-50">
@@ -201,19 +174,20 @@ export default function CarbonBNUVisualizer() {
                 }}
                 className="h-[300px] w-full"
               >
-                <LineChart data={scope1Data} width="100%">
+                <LineChart data={scope1Data}>
                   <XAxis dataKey="month" />
                   <YAxis />
                   <ChartTooltip content={<ChartTooltipContent />} />
                   <Legend />
                   <Line
-                    type="monotone"
-                    dataKey="emissions"
-                    stroke="var(--color-emissions)"
-                    strokeWidth={3}
-                    dot={{ fill: "var(--color-emissions)", strokeWidth: 2, r: 6 }}
-                    name="CO₂ Emissions"
-                  />
+  type="monotone"
+  dataKey="emissionsinKg"
+  stroke="var(--color-emissions)"
+  strokeWidth={3}
+  dot={{ fill: "var(--color-emissions)", strokeWidth: 2, r: 6 }}
+  name="CO₂ Emissions (kg)"
+/>
+
                 </LineChart>
               </ChartContainer>
             </CardContent>
@@ -221,92 +195,175 @@ export default function CarbonBNUVisualizer() {
         </div>
       </section>
 
-      {/* Scope 3 Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-8">Scope 3: Indirect Emissions</h2>
-          <p className="text-lg text-gray-600 mb-8">
-            Electricity consumption and associated emissions by building block
-          </p>
+      {/* Scope 2 Section */}
+<section className="py-16">
+  <div className="container mx-auto px-4">
+    <h2 className="text-4xl font-bold mb-8">Scope 2: Electricity Emissions</h2>
+    <p className="text-lg text-gray-600 mb-8">
+      Grid emissions vs solar offset showing net carbon impact by months.
+    </p>
 
-          <div className="grid lg:grid-cols-2 gap-8">
-            <Card className="border-2 border-black">
-              <CardHeader>
-                <CardTitle>Electricity Usage by Block</CardTitle>
-                <CardDescription>Annual electricity consumption (kWh)</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ChartContainer
-                  config={{
-                    electricityUse: {
-                      label: "Electricity Use (kWh)",
-                      color: "#000000",
-                    },
-                  }}
-                  className="h-[300px]"
-                >
-                  <BarChart data={scope3Data} layout="vertical">
-                    <XAxis type="number" />
-                    <YAxis dataKey="block" type="category" width={80} />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Legend />
-                    <Bar dataKey="electricityUse" fill="var(--color-electricityUse)" name="Electricity Use (kWh)" />
-                  </BarChart>
-                </ChartContainer>
-              </CardContent>
-            </Card>
+    <Card className="border-2 border-black w-full">
+      <CardHeader>
+        <CardTitle>Grid Emissions vs Solar Offset</CardTitle>
+        <CardDescription>These emissions include emissions from the grid and savings by solar.</CardDescription>
+      </CardHeader>
+      <CardContent className="w-full">
+        <ChartContainer
+          config={{
+            gridEmission: {
+              label: "Grid Emissions",
+              color: "#DC2626",
+            },
+            savedEmissions: {
+              label: "Emission Saved by Solar",
+              color: "#16A34A",
+            },
+            netEmissions: {
+              label: "Net Emissions",
+              color: "#333333",
+            },
+          }}
+          className="h-[400px] w-full"
+        >
+          <BarChart data={scope2Data} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+            {/* Match dataKey to actual key in scope2Data */}
+            <XAxis dataKey="month" angle={-45} textAnchor="end" height={80} interval={0} />
+            <YAxis />
+            <ChartTooltip content={<ChartTooltipContent />} />
+            <Legend />
+            <Bar dataKey="gridEmission" fill="var(--color-gridEmission)" name="Grid Emissions" />
+            <Bar dataKey="savedEmissions" fill="var(--color-savedEmissions)" name="Saved Emissions" />
+            <Bar dataKey="netEmissions" fill="var(--color-netEmissions)" name="Net Emissions" />
+          </BarChart>
+        </ChartContainer>
+      </CardContent>
+    </Card>
+  </div>
+</section>
+      <Separator className="my-8" />
 
-            <Card className="border-2 border-black">
-              <CardHeader>
-                <CardTitle>Emissions by Block</CardTitle>
-                <CardDescription>Annual emissions (kg CO₂e)</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ChartContainer
-                  config={{
-                    emissions: {
-                      label: "Emissions (kg CO₂e)",
-                      color: "#333333",
-                    },
-                  }}
-                  className="h-[300px]"
-                >
-                  <BarChart data={scope3Data} layout="vertical">
-                    <XAxis type="number" />
-                    <YAxis dataKey="block" type="category" width={80} />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Legend />
-                    <Bar dataKey="emissions" fill="var(--color-emissions)" name="Emissions (kg CO₂e)" />
-                  </BarChart>
-                </ChartContainer>
-              </CardContent>
-            </Card>
-          </div>
+      
+       {/* Scope 3 Section */}
+    <section className="py-16">
+      <div className="container mx-auto px-4">
+        <h2 className="text-4xl font-bold mb-8">Scope 3: Indirect Emissions</h2>
+        <p className="text-lg text-gray-600 mb-8">
+          These are the emissions from waste production.
+        </p>
 
-          {/* Additional Scope 3 Info */}
-          <div className="mt-8 grid md:grid-cols-2 gap-6">
-            <Card className="border-2 border-black">
-              <CardHeader>
-                <CardTitle>Total Electricity Consumption</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">1,561,515.24 kWh/year</div>
-              </CardContent>
-            </Card>
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Waste Production Chart */}
+          <Card className="border-2 border-black">
+            <CardHeader>
+              <CardTitle>Waste Production</CardTitle>
+              <CardDescription>Monthly waste production by category (kg)</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ChartContainer
+  className="h-[300px]"
+  config={{
+    emissionsBottles: { color: "#1f77b4" },
+    emissionsGlass: { color: "#ff7f0e" },
+    emissionsFoodWaste: { color: "#2ca02c" },
+    emissionsPlastic: { color: "#d62728" },
+    emissionsCartons: { color: "#9467bd" }
+  }}
+>
+                <BarChart data={scope3Data} layout="vertical">
+                  <XAxis type="number" />
+                  <YAxis dataKey="month" type="category" width={100} />
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <Legend />
+                  <Bar dataKey="bottles" fill="#1f77b4" name="Bottles (kg)" />
+                  <Bar dataKey="glass" fill="#ff7f0e" name="Glass (kg)" />
+                  <Bar dataKey="foodWaste" fill="#2ca02c" name="Food Waste (kg)" />
+                  <Bar dataKey="plastic" fill="#d62728" name="Plastic (kg)" />
+                  <Bar dataKey="cartons" fill="#9467bd" name="Cartons (kg)" />
+                </BarChart>
+              </ChartContainer>
+            </CardContent>
+          </Card>
 
-            <Card className="border-2 border-black">
-              <CardHeader>
-                <CardTitle>Waste Generated</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">230.97 kg/year</div>
-                <p className="text-sm text-gray-600 mt-2">Scope 3 Category 5</p>
-              </CardContent>
-            </Card>
-          </div>
+          {/* Emissions Chart */}
+          <Card className="border-2 border-black">
+            <CardHeader>
+              <CardTitle>Emissions by Waste</CardTitle>
+              <CardDescription>Monthly emissions by category (KgCO₂e)</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ChartContainer
+  className="h-[300px]"
+  config={{
+    emissionsBottles: { color: "#1f77b4" },
+    emissionsGlass: { color: "#ff7f0e" },
+    emissionsFoodWaste: { color: "#2ca02c" },
+    emissionsPlastic: { color: "#d62728" },
+    emissionsCartons: { color: "#9467bd" }
+  }}
+>
+                <BarChart data={scope3Data} layout="vertical">
+                  <XAxis type="number" />
+                  <YAxis dataKey="month" type="category" width={100} />
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <Legend />
+                  <Bar dataKey="emissionsBottles" fill="#1f77b4" name="Bottles (KgCO₂e)" />
+                  <Bar dataKey="emissionsGlass" fill="#ff7f0e" name="Glass (KgCO₂e)" />
+                  <Bar dataKey="emissionsFoodWaste" fill="#2ca02c" name="Food Waste (KgCO₂e)" />
+                  <Bar dataKey="emissionsPlastic" fill="#d62728" name="Plastic (KgCO₂e)" />
+                  <Bar dataKey="emissionsCartons" fill="#9467bd" name="Cartons (KgCO₂e)" />
+                </BarChart>
+              </ChartContainer>
+            </CardContent>
+          </Card>
         </div>
-      </section>
 
+        {/* Additional Scope 3 Info */}
+        <div className="mt-8 grid md:grid-cols-2 gap-6">
+          <Card className="border-2 border-black">
+            <CardHeader>
+              <CardTitle>Total Waste Emissions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold">
+                {(
+                  scope3Data.reduce(
+                    (sum, m) =>
+                      sum +
+                      m.emissionsBottles +
+                      m.emissionsGlass +
+                      m.emissionsFoodWaste +
+                      m.emissionsPlastic +
+                      m.emissionsCartons,
+                    0
+                  )
+                ).toFixed(2)}{" "}
+                KgCO₂e/two months
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-2 border-black">
+            <CardHeader>
+              <CardTitle>Total Waste Generated</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold">
+                {(
+                  scope3Data.reduce(
+                    (sum, m) =>
+                      sum + m.bottles + m.glass + m.foodWaste + m.plastic + m.cartons,
+                    0
+                  )
+                ).toFixed(2)}{" "}
+                kg/two months
+              </div>
+              <p className="text-sm text-gray-600 mt-2">Scope 3 Category 5</p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section> 
       {/* Footer */}
       <footer className="bg-black text-white py-12">
         <div className="container mx-auto px-4 text-center">
